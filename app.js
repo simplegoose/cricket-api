@@ -15,7 +15,7 @@ const {
 
 //Cors options to specify clients
 const corsOptions = {
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000', 'https://cricket-frontend.vercel.app/'],
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     credentials: true,
 }
@@ -49,4 +49,5 @@ app.use(cors(corsOptions));
 
 app.use('/', routes);
 
-app.listen(8080)
+const PORT = process.env.PORT || 8080;
+app.listen(PORT);
