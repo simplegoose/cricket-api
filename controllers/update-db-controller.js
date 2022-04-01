@@ -16,6 +16,10 @@ exports.refreshDb = async (req, res) => {
     //Delete all player in the db incase there are changes
     await Players.deleteMany({});
 
+    //Get squads
+    let squads = await Squads.find({});
+    let squadIds = squads[0]?.squadAnnouncedList.map( item => item.squadId);
+
     /**
      * Set timeout function to allow code to run
      * asychrounously and enable all requests to be made
@@ -52,12 +56,9 @@ exports.refreshDb = async (req, res) => {
     });
 
     let getPlayersPromise = new Promise((resolve, reject) => {
+        //Get squadsIds
         setTimeout(async () => {
     
-            //Get squads
-            let squads = await Squads.find({});
-            let squadIds = squads[0]?.squadAnnouncedList.map( item => item.squadId);
-
             if(squadIds.length > 0) {
                 squadIds.forEach( (item, index) => {
                     if(index > 0) {
