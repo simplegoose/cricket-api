@@ -35,17 +35,23 @@ exports.refreshDb = async (req, res) => {
     });
 
     let getSquadsPromise = new Promise( (resolve, reject) => {
-        getSquads();
+        setTimeout(() => {
+            getSquads();  
+        }, 5000);
         resolve(true);
     });
 
     let getVenuesPromise = new Promise( (resolve, reject) => {
-        getVenues();
+        setTimeout(() => {
+            getVenues();
+        }, 10000);
         resolve(true);
     });
 
     let getPointsTablePromise = new Promise( (resolve, reject) => {
-        getPointsTable();
+        setTimeout(() => {
+            getPointsTable();
+        }, 15000);
         resolve(true);
     });
 
