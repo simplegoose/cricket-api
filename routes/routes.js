@@ -1,6 +1,8 @@
 const express = require("express");
+const { userloginController, checkIfLoggedIn } = require("../controllers/login-controller");
 const { getMatch } = require("../controllers/matches-controller");
-const { getPlayers } = require("../controllers/players-controller");
+const { getPlayers, getPlayersWithId } = require("../controllers/players-controller");
+const { signUpController } = require("../controllers/sign-up-controller");
 const { getSquads } = require("../controllers/squads-controller");
 const { getTables } = require("../controllers/tables-controller");
 const { refreshDb } = require("../controllers/update-db-controller");
@@ -30,5 +32,17 @@ router
 router
 .route('/api/get-players')
 .get(getPlayers)
+
+router
+.route('/api/get-players:id')
+.get(getPlayersWithId)
+
+router
+.route('/api/sign-up')
+.post(signUpController);
+
+router
+.route('/api/sign-in')
+.post(checkIfLoggedIn, userloginController);
 
 module.exports = router;
