@@ -13,11 +13,11 @@ exports.signUpController = async (req, res) => {
         return;
     }
     
-    const { password, email } = req.body;
+    const { password, email, phoneNumber } = req.body;
 
     let indexOfAt = email.indexOf('@');
 
-    if( email === '' || password === '' ) {
+    if( email === '' || password === '' || phoneNumber === '' ) {
         res.status(400)
             .send({
                 message: 'Please fill in the fields and try again'
@@ -28,7 +28,8 @@ exports.signUpController = async (req, res) => {
 
     const userSignup = new User({
         password : bcrypt.hashSync(password, salt),
-        email : email.toLowerCase()
+        email : email.toLowerCase(),
+        phoneNumber
     });
 
     const existingUser = await User.findOne({ email : req.body.email.toLowerCase()})
@@ -59,9 +60,14 @@ exports.signUpController = async (req, res) => {
                         })
                 });
 
+        req.session.isLoggedIn = true;
+        req.session.userName = email;
+
         res.status(200)
-            .send({
-                message: `Welcome ${email.slice(0, indexOfAt)}! you can now proceed to login`
-        });
+            .send(req.session);
+        // res.status(200)
+        //     .send({
+        //         message: `Welcome ${email.slice(0, indexOfAt)}! you can now proceed to login`
+        // });
     }
 }

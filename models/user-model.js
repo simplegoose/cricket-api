@@ -9,6 +9,7 @@ const User = mongoose.Schema({
         type : String,
         required : true
     },
+    phoneNumber: String,
     resetToken: String,
     expireToken: Date
 });
